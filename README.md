@@ -65,10 +65,10 @@ MIT
 - [x] allow injecting options
 - [x] comment this code
 - [x] write readme
-- [ ] tests
+- [x] tests
 - [ ] Automate prettification, test running, etc
-- [ ] return possible compilation errors from resolveTypes
 - [ ] make npm library out of this
 - [ ] blog post
+- [ ] return possible compilation errors from resolveTypes
 
 
