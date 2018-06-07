@@ -1,5 +1,7 @@
 # resolve-types
 
+[![npm version](https://img.shields.io/npm/v/resolve-types.svg?style=flat-square)](https://www.npmjs.com/package/resolve-types)
+
 `resolve-types` allows you to resolve types in inline code. This functionality is handy to write unit tests for type operators and check them in a regular test suite.
 
 ## Example

@@ -1,8 +1,9 @@
 {
   "name": "resolve-types",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Resolve TypeScript types from inline code - useful for writing type-level tests",
   "main": "index.js",
+  "repository": "github:paulkoerbitz/resolve-types",
   "keywords": [
     "TypeScript",
     "types",
