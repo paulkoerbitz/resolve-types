@@ -66,7 +66,7 @@ MIT
 - [x] comment this code
 - [x] write readme
 - [x] tests
-- [ ] Automate prettification, test running, etc
+- [x] Automate prettification, test running, etc
 - [ ] make npm library out of this
 - [ ] blog post
 - [ ] return possible compilation errors from resolveTypes

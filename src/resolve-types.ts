@@ -50,8 +50,8 @@ export const resolveTypes = (
         )
         .filter(symbol => isTypeNameRegexp.test(symbol.name))
         .map(symbol => ({
+            name: symbol.name,
             type: checker.getDeclaredTypeOfSymbol(symbol),
-            name: symbol.name
         }))
         .forEach(({ type, name }) => {
             result[name] = checker.typeToString(
@@ -74,7 +74,7 @@ const createInlineCode = (s: TemplateStringsArray | string, args: any[]) => {
     if (typeof s === 'string') {
         return s;
     }
-    let input: string[] = [];
+    const input: string[] = [];
     for (let i = 0; i < s.length; ++i) {
         if (i > 0) {
             input.push(`__${args[i - 1]}`);
@@ -86,16 +86,17 @@ const createInlineCode = (s: TemplateStringsArray | string, args: any[]) => {
 
 /**
  * Extract the type names from the inline code
- * e.g. for `type __1 = string;` return ['__1'];
+ * e.g. for `type __1 = string;` return `['__1']`;
  *
  * @param code The inline source code
  * @returns an array of type names
  */
 const extractTypeNames = (code: string) => {
-    let names: string[] = [];
-    let match: RegExpExecArray | null = null;
-    while ((match = TYPENAME_RE.exec(code))) {
+    const names: string[] = [];
+    let match: RegExpExecArray | null = TYPENAME_RE.exec(code);
+    while (match != null) {
         names.push(match[1]);
+        match = TYPENAME_RE.exec(code);
     }
     return names;
 };
@@ -137,7 +138,7 @@ const createInlineProgram = (code: string) => {
     const compilerHost = ts.createCompilerHost(options);
     const customCompilerHost = {
         ...compilerHost,
-        getSourceFile
+        getSourceFile,
     };
     const program = ts.createProgram([FILENAME], options, customCompilerHost);
     return { program, inlineSourceFile };
