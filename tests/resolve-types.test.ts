@@ -1,5 +1,4 @@
 import 'jest';
-import * as util from 'util';
 import { resolveTypes } from '../src';
 
 describe('resolveTypes', () => {
