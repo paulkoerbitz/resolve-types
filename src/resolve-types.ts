@@ -33,7 +33,7 @@ export const resolveTypes = (
     input: string | TemplateStringsArray,
     ...args: any[]
 ) => {
-    const types: { [key: string]: string } = {};
+    const types: { readonly [key: string]: string } = {};
 
     const code = createInlineCode(input, args);
     const { program, inlineSourceFile } = createInlineProgram(code);
@@ -49,18 +49,27 @@ export const resolveTypes = (
             ts.SymbolFlags.Type
         )
         .filter(symbol => isTypeNameRegexp.test(symbol.name))
-        .map(symbol => ({
-            name: symbol.name,
-            type: checker.getDeclaredTypeOfSymbol(symbol),
-        }))
-        .forEach(({ type, name }) => {
-            types[name] = checker.typeToString(
-                type,
-                inlineSourceFile,
-                // We need this TypeFormatFlags to avoid getting
-                // the type alias we created back
-                ts.TypeFormatFlags.InTypeAlias
-            );
+        .forEach(symbol => {
+            // Lazily compute the type of each desired symbol by
+            // defining it as a get-able property. This ensures
+            // we only compute the types we actually need
+            const name = symbol.name;
+            let typeAsString: string; // cache value once computed
+            Object.defineProperty(types, name, {
+                get: () => {
+                    if (typeAsString == undefined) {
+                        const type = checker.getDeclaredTypeOfSymbol(symbol);
+                        typeAsString = checker.typeToString(
+                            type,
+                            inlineSourceFile,
+                            // We need this TypeFormatFlags to avoid getting
+                            // the type alias we created back
+                            ts.TypeFormatFlags.InTypeAlias
+                        );
+                    }
+                    return typeAsString;
+                },
+            });
         });
 
     let diagnostics: ReadonlyArray<ts.Diagnostic>;
