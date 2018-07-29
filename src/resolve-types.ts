@@ -63,13 +63,21 @@ export const resolveTypes = (
             );
         });
 
-    const diagnostics = [
-        ...program.getSyntacticDiagnostics(inlineSourceFile),
-        ...program.getSemanticDiagnostics(inlineSourceFile),
-        ...program.getDeclarationDiagnostics(inlineSourceFile),
-    ];
+    let diagnostics: ReadonlyArray<ts.Diagnostic>;
 
-    return { types, diagnostics };
+    return {
+        types,
+        get diagnostics() {
+            if (diagnostics == undefined) {
+                diagnostics = [
+                    ...program.getSyntacticDiagnostics(inlineSourceFile),
+                    ...program.getSemanticDiagnostics(inlineSourceFile),
+                    ...program.getDeclarationDiagnostics(inlineSourceFile),
+                ];
+            }
+            return diagnostics;
+        },
+    };
 };
 
 /**
