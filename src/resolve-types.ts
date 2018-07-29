@@ -33,7 +33,7 @@ export const resolveTypes = (
     input: string | TemplateStringsArray,
     ...args: any[]
 ) => {
-    const result: { [key: string]: string } = {};
+    const types: { [key: string]: string } = {};
 
     const code = createInlineCode(input, args);
     const { program, inlineSourceFile } = createInlineProgram(code);
@@ -54,7 +54,7 @@ export const resolveTypes = (
             type: checker.getDeclaredTypeOfSymbol(symbol),
         }))
         .forEach(({ type, name }) => {
-            result[name] = checker.typeToString(
+            types[name] = checker.typeToString(
                 type,
                 inlineSourceFile,
                 // We need this TypeFormatFlags to avoid getting
@@ -63,7 +63,13 @@ export const resolveTypes = (
             );
         });
 
-    return result;
+    const diagnostics = [
+        ...program.getSyntacticDiagnostics(inlineSourceFile),
+        ...program.getSemanticDiagnostics(inlineSourceFile),
+        ...program.getDeclarationDiagnostics(inlineSourceFile),
+    ];
+
+    return { types, diagnostics };
 };
 
 /**
