@@ -1,0 +1,7 @@
+{
+    "includeDeclarations": true,
+    "excludeExternals": true,
+    "name": "intspector",
+    "mode": "file",
+    "out": "docs"
+}
