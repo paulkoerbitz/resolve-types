@@ -1,11 +1,9 @@
-import * as ts from 'typescript';
 import * as fs from 'fs';
+import * as ts from 'typescript';
 
 export const FILENAME = '__ts-type-test-inline-e1d70ff1__';
 export const FILENAME_RE = new RegExp(FILENAME);
 export const TYPENAME_RE = /type\s+(__[a-zA-Z0-9][_a-zA-Z0-9]*)[^_a-zA-Z0-9]+/g;
-
-
 
 /**
  * The global options object which setOptions and getOptions work on
@@ -35,13 +33,13 @@ export const setOptions = (
         return;
     }
     const maybeFile = ts.findConfigFile(__dirname, fs.existsSync);
-    if (maybeFile == undefined) {
+    if (maybeFile === undefined) {
         throw new Error('setOptions: Cannot find tsconfig.json');
     }
     const { config, error } = ts.readConfigFile(maybeFile, path =>
         fs.readFileSync(path).toString()
     );
-    if (error != undefined) {
+    if (error !== undefined) {
         const message = `TS${error.code}: ${error.file}:${error.start} ${
             error.messageText
         }`;
@@ -54,12 +52,11 @@ export const setOptions = (
  * Get the TypeScript compiler options to be used for resolving types
  */
 export const getOptions = (): ts.CompilerOptions => {
-    if (options == undefined) {
+    if (options === undefined) {
         setOptions({});
     }
     return options;
 };
-
 
 const createInlineProgram = (code: string) => {
     // Work around definite assignemt checking: inlineSourceFile is assigned
@@ -77,7 +74,7 @@ const createInlineProgram = (code: string) => {
                 ...args
             );
         }
-        if (inlineSourceFile == undefined) {
+        if (inlineSourceFile === undefined) {
             inlineSourceFile = ts.createSourceFile(
                 FILENAME,
                 code,
@@ -118,7 +115,7 @@ export const resolveTypes = (
                 inlineSourceFile,
                 ts.TypeFormatFlags.InTypeAlias
             );
-            console.log(typeAsString)
+            console.log(typeAsString);
             return typeAsString;
         });
 
@@ -127,7 +124,7 @@ export const resolveTypes = (
     return {
         types: {},
         get diagnostics() {
-            if (diagnostics == undefined) {
+            if (diagnostics === undefined) {
                 diagnostics = [
                     ...program.getSyntacticDiagnostics(inlineSourceFile),
                     ...program.getSemanticDiagnostics(inlineSourceFile),
@@ -139,5 +136,5 @@ export const resolveTypes = (
     };
 };
 
-const p = resolveTypes(`type x = Pick<{a: string, b: number}, 'b'>`, ['x']);
+const p = resolveTypes("type x = Pick<{a: string, b: number}, 'b'>", ['x']);
 console.log(p);
