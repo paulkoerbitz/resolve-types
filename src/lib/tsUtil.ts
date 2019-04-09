@@ -119,21 +119,22 @@ export const resolveTypes = (
             return typeAsString;
         });
 
-    let diagnostics: ReadonlyArray<ts.Diagnostic>;
+    const types = pairs.reduce((acc, [k, v]) => {
+        acc[k] = v;
+        return acc;
+    }, {} as { [K in keyof T]: string })
 
-    return {
-        types: {},
-        get diagnostics() {
-            if (diagnostics === undefined) {
-                diagnostics = [
-                    ...program.getSyntacticDiagnostics(inlineSourceFile),
-                    ...program.getSemanticDiagnostics(inlineSourceFile),
-                    ...program.getDeclarationDiagnostics(inlineSourceFile),
-                ];
-            }
-            return diagnostics;
-        },
-    };
+    const diagnostics = [
+        ...program.getSyntacticDiagnostics(inlineSourceFile),
+        ...program.getSemanticDiagnostics(inlineSourceFile),
+        ...program.getDeclarationDiagnostics(inlineSourceFile),
+    ];
+
+    if (diagnostics.length > 0) {
+        throw diagnostics;
+    }
+
+    return types;
 };
 
 const p = resolveTypes("type x = Pick<{a: string, b: number}, 'b'>", ['x']);
