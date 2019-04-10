@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Options getOptions 1`] = `
+Object {
+  "baseUrl": "src",
+  "configFilePath": undefined,
+  "declaration": true,
+  "esModuleInterop": true,
+  "lib": Array [
+    "lib.es2017.d.ts",
+  ],
+  "module": 1,
+  "moduleResolution": 2,
+  "outDir": "dist",
+  "rootDir": "src",
+  "sourceMap": true,
+  "strict": true,
+  "target": 1,
+}
+`;
+
+exports[`Options setOptions (ignore) 1`] = `
+Object {
+  "baseUrl": "foo",
+}
+`;
+
+exports[`Options setOptions 1`] = `
+Object {
+  "baseUrl": "src",
+  "configFilePath": undefined,
+  "declaration": true,
+  "esModuleInterop": true,
+  "lib": Array [
+    "lib.es2017.d.ts",
+  ],
+  "module": 1,
+  "moduleResolution": 2,
+  "outDir": "dist",
+  "rootDir": "src",
+  "sourceMap": true,
+  "strict": false,
+  "target": 1,
+}
+`;

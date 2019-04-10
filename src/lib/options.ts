@@ -6,6 +6,10 @@ import * as ts from 'typescript';
  */
 let options: ts.CompilerOptions;
 
+
+/**
+ * @see https://github.com/Microsoft/TypeScript/issues/5276#issuecomment-148926002
+ */
 function convertConfigToCompilerOptions(opts: {
     compilerOptions: ts.CompilerOptions;
 }) {
@@ -19,6 +23,7 @@ function convertConfigToCompilerOptions(opts: {
         {} as any,
         ''
     );
+    // TODO: catch errors, filter empty files error
     return parsed.options;
 }
 
@@ -33,10 +38,10 @@ function convertConfigToCompilerOptions(opts: {
 export const setOptions = (
     input: ts.CompilerOptions,
     ignoreProjectOptions = false
-): void => {
+) => {
     if (ignoreProjectOptions) {
         options = input;
-        return;
+        return options;
     }
     const maybeFile = ts.findConfigFile(__dirname, fs.existsSync);
     if (maybeFile === undefined) {
