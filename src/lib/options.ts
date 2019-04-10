@@ -13,7 +13,7 @@ let options: ts.CompilerOptions;
 function convertConfigToCompilerOptions(opts: {
     compilerOptions: ts.CompilerOptions;
 }) {
-    var parsed = ts.parseJsonConfigFileContent(
+    const { options, errors } = ts.parseJsonConfigFileContent(
         {
             ...opts,
             // if files are not specified then parseJsonConfigFileContent
@@ -23,8 +23,14 @@ function convertConfigToCompilerOptions(opts: {
         {} as any,
         ''
     );
-    // TODO: catch errors, filter empty files error
-    return parsed.options;
+    // Remove the following error:
+    // { messageText: "The 'files' list in config file 'tsconfig.json' is empty.", category: 1, code: 18002 }
+    const relevantErrors = errors.filter(e => e.code !== 18002);
+    if (relevantErrors.length > 0) {
+        throw relevantErrors;
+    }
+
+    return options;
 }
 
 /**
