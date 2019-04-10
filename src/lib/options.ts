@@ -6,14 +6,24 @@ import * as ts from 'typescript';
  */
 let options: ts.CompilerOptions;
 
+function convertConfigToCompilerOptions(opts: {
+    compilerOptions: ts.CompilerOptions;
+}) {
+    var parsed = ts.parseJsonConfigFileContent(
+        {
+            ...opts,
+            // if files are not specified then parseJsonConfigFileContent
+            // will use ParseConfigHost to collect files in containing folder
+            files: [],
+        },
+        {} as any,
+        ''
+    );
+    return parsed.options;
+}
+
 /**
  * Set compiler options for checking inline code
- *
- * These options set a global options object which any subsequent
- * invocations of `resolveTypes` will use.
- *
- * ignoreProjectOptions controls if the options from tsconfig are
- * used or not.
  *
  * @param input Compiler options for use when checking inline code.
  * @param ignoreProjectOptions If true, do not merge the passed options with
@@ -35,13 +45,15 @@ export const setOptions = (
     const { config, error } = ts.readConfigFile(maybeFile, path =>
         fs.readFileSync(path).toString()
     );
+    const parsedConfig = convertConfigToCompilerOptions(config);
     if (error !== undefined) {
         const message = `TS${error.code}: ${error.file}:${error.start} ${
             error.messageText
         }`;
         throw new Error(message);
     }
-    options = { ...config, ...input };
+    options = { ...parsedConfig, ...input };
+    return options;
 };
 
 /**
