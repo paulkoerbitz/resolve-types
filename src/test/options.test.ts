@@ -1,4 +1,4 @@
-import { getOptions, setOptions } from 'main';
+import { getOptions, setOptions } from '..';
 
 describe('Options', () => {
     test('getOptions', () => {

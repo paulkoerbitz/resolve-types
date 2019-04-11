@@ -5,7 +5,7 @@ export const inspect = <T extends Record<string, string>>(
     preamble: string,
     typeMap: T
 ) => {
-    const code = [preamble].concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d}`)).join(' ')
+    const code = [preamble].concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d};`)).join(' ')
     const { program, inlineSourceFile } = createInlineProgram(code);
     const checker = program.getTypeChecker();
 
@@ -42,6 +42,3 @@ export const inspect = <T extends Record<string, string>>(
 
     return types;
 };
-
-const p = inspect('', { x: `Pick<{a: string, b: number}, 'b'>`});
-console.log(p);

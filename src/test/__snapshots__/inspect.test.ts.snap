@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Inspect Basic types 1`] = `
+Object {
+  "anys": "any[]",
+  "fn": "(x: boolean) => number",
+  "id": "<T>(x: T) => T",
+  "record": "{ [x: number]: string; }",
+  "str": "string",
+}
+`;
+
+exports[`Inspect Import 1`] = `
+Object {
+  "res": "<T extends Record<string, string>>(preamble: string, typeMap: T) => { [K in keyof T]: string; }",
+}
+`;
+
+exports[`Inspect Preamble 1`] = `
+Object {
+  "res": "number & string",
+}
+`;
+
+exports[`Inspect Self-reference 1`] = `
+Object {
+  "a": "string",
+  "b": "string | Promise<string>",
+}
+`;
