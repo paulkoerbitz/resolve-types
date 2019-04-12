@@ -5,7 +5,7 @@ export const inspect = <T extends Record<string, string>>(
     preamble: string,
     typeMap: T
 ) => {
-    const code = [preamble].concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d};`)).join(' ')
+    const code = [preamble].concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d};`)).join(' ');
     const { program, inlineSourceFile } = createInlineProgram(code);
     const checker = program.getTypeChecker();
 
@@ -28,7 +28,7 @@ export const inspect = <T extends Record<string, string>>(
     const types = pairs.reduce((acc, [k, v]) => {
         acc[k] = v;
         return acc;
-    }, {} as { [K in keyof T]: string })
+    }, {} as { [K in keyof T]: string });
 
     const diagnostics = [
         ...program.getSyntacticDiagnostics(inlineSourceFile),

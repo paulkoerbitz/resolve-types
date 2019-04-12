@@ -6,7 +6,6 @@ import * as ts from 'typescript';
  */
 let options: ts.CompilerOptions;
 
-
 /**
  * @see https://github.com/Microsoft/TypeScript/issues/5276#issuecomment-148926002
  */

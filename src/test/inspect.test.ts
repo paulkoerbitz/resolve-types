@@ -19,13 +19,13 @@ describe('Inspect', () => {
         expect(types).toMatchSnapshot();
     });
     test('Preamble', () => {
-        const types = inspect(`let x = 1; let y = '';`, {
+        const types = inspect("let x = 1; let y = '';", {
             res: 'typeof x & typeof y',
         });
         expect(types).toMatchSnapshot();
     });
     test('Import', () => {
-        const types = inspect(`import { inspect } from 'index';`, {
+        const types = inspect("import { inspect } from 'index';", {
             res: 'typeof inspect',
         });
         expect(types).toMatchSnapshot();
