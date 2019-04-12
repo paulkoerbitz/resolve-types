@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { createInlineProgram } from './program';
 
-export const inspect = <T extends Record<string, string>>(
+export const inspectObject = <T extends Record<string, string>>(
     preamble: string,
     typeMap: T
 ) => {

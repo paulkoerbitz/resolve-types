@@ -1,8 +1,8 @@
-import { inspect } from 'index';
+import { inspectObject } from 'index';
 
-describe('Inspect', () => {
+describe('InspectObject', () => {
     test('Basic types', () => {
-        const types = inspect('', {
+        const types = inspectObject('', {
             str: 'string',
             anys: 'any[]',
             record: 'Record<number, string>',
@@ -12,21 +12,21 @@ describe('Inspect', () => {
         expect(types).toMatchSnapshot();
     });
     test('Self-reference', () => {
-        const types = inspect('', {
+        const types = inspectObject('', {
             a: 'string',
             b: 'a | Promise<a>',
         });
         expect(types).toMatchSnapshot();
     });
     test('Preamble', () => {
-        const types = inspect("let x = 1; let y = '';", {
+        const types = inspectObject("let x = 1; let y = '';", {
             res: 'typeof x & typeof y',
         });
         expect(types).toMatchSnapshot();
     });
     test('Import', () => {
-        const types = inspect("import { inspect } from 'index';", {
-            res: 'typeof inspect',
+        const types = inspectObject("import { inspectObject } from 'index';", {
+            res: 'typeof inspectObject',
         });
         expect(types).toMatchSnapshot();
     });
