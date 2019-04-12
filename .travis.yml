@@ -1,0 +1,41 @@
+language: node_js
+node_js:
+- '6'
+- '7'
+- '8'
+- '9'
+- '10'
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+- npm run lint
+- npm run build
+- npm run test:coverage
+- npm run docs
+
+after_script:
+  - echo $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
+
+deploy:
+  - provider: npm
+    email: grissius@gmail.com
+    skip_cleanup: true
+    api_key:
+      secure: OYE6Aqbly7s2HlraX2H+AdAgdaKhIDSNuX/SXgAgybdko3WV2aZRMBP3GcBCeNP4Hi+sZrnFFETA7Mh8pY4BiUJZx2xNKnY/Bw54hQgqLIkp16GnBPDKTvUAVTUu8pfVSZe9OYIVnR7hi3O7Ayegqyu5RGY0JfAog7VgaalXXy3GJyd1dFXWKgNPfHK3mH93ijpfechmjR6KtlBkgNxl87EdMCGQasX8qdC1pH1ZISdSNWJEexWnqi88cSmPMaVtEjy/ouscmOfw8Q29NOFozCZ+6fTed6JLaD2W5KtSYrLSyYwUysbxSeknna5HcVDVnX0GyqQGfx+B41PYObD//r0z7Kdn5NDkgCdvitb9Rvi9WnMYpeVPa3rnNJn49uPTa/5ywDNjMlGRH4Fs3EXd/qAF8mKS3zkNsW/wHVpHxWtOA7LstEHEe3Zo5kZ4LZUpN8ilO9YlIfVjyUA1zXH962PZ+E6XSZ0YjO4DoqFqAh2m8K9I/4N/5hVz2VbKBjFXpuqDccSFHQ4PkIY6yCPMQB8P135eeLstb88sN6plUbI3HCuajTZYJqISRivVc+wBizu7btrCC5j22Lki5uT/Xl/Xza9J+lTM8Wx4Qh16EABfB53rUOQRVh/eZ2AKS1F9PH6zPEyP91jX4Q9oZlRD8yFL0qG5X1HIOKhlrg0lrXE=
+    on:
+      tags: true
+      repo: grissius/intspector
+  - provider: pages
+    skip-cleanup: true
+    github-token:
+      secure: HD6654g7TX9NdgmqXhPGigbEx3TqVzMg+uHSP/YAqWCoeTQuiFA7G3WJWowzzmt2EWLyXFVuEwtBOaMFNiLgBUbXP1170ab+Ts3b0YukHYkbWW9P8NMvWpwDu6NaBia2GuCgQoIKfpRz0uFxDNfd571gXvaW13VZ2H6irdv3Y7WtwDmt/ur7wTsWtIeJzi4Ed+kBasaL1OkZTA9p6RsD64Dn9mBAn1AFosD9damr/1ItWKC1YQ49VmALYrKMlXeAYNSc4lOe74rHtNc6SF7ZEMtP8VXQP3QmqESymYb3zXfuzJFYtaL+BwEFTNlYsruEJcWyaxSARdjUhhLIGJzG1vhN1WFSzCTUU4ou0wlphdcvy0/YNWYLFii+MzoppoqeYztIq2cxeVXzdhILJj8UyphslTei4i/vei751rTJAEA1uJKVFk8Fj/sWW8JeVn6qkKoQHepT/SrD25kyfqHTxisNlvh/SU3ACNC0o1Tdr3qsv8r32zH0ybFOndOWd1E5r1oKjcftlvGXLwCgYNmAHDDNUjIWxvAlvtNO2bNXT6e3PaT+D6G3olJSbpTXwWzrCHweUKPPlLFMCyqTXYmzEHeUlTneFhGEmhSV75Xjb1BHD5pa5lxxCjrAf1qwF9VSLPXWWv8LOWaMTJsBIHXnjp5gc9+Jnw/YxfskAgd+N18=
+    keep-history: true
+    local-dir: ./docs
+    verbose: true
+    on:
+      branch: master
