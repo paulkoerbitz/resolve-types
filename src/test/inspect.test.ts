@@ -30,4 +30,11 @@ describe('InspectObject', () => {
         });
         expect(types).toMatchSnapshot();
     });
+    test('Bad import', () => {
+        expect(() =>
+            inspectObject("import { foo } from 'blah';", {
+                res: 'typeof foo',
+            })
+        ).toThrow();
+    });
 });
