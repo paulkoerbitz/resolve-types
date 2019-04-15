@@ -6,7 +6,7 @@ export const FILENAME_RE = new RegExp(FILENAME);
 export const TYPENAME_RE = /type\s+(__[a-zA-Z0-9][_a-zA-Z0-9]*)[^_a-zA-Z0-9]+/g;
 
 export const createInlineProgram = (code: string) => {
-    // Work around definite assignemt checking: inlineSourceFile is assigned
+    // Work around definite assignment checking: inlineSourceFile is assigned
     // when ts.createProgram is created
     let inlineSourceFile!: ts.SourceFile;
     const getSourceFile = (

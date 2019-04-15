@@ -5,7 +5,7 @@ export const inspectObjectCore = <T extends Record<string, string>>(
     preamble: string,
     typeMap: T
 ) => {
-    const code = [preamble]
+    const code = [`${preamble};`]
         .concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d};`))
         .join(' ');
     const { program, inlineSourceFile } = createInlineProgram(code);
