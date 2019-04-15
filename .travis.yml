@@ -30,11 +30,11 @@ deploy:
       tags: true
       repo: grissius/intspector
   - provider: pages
-    skip-cleanup: true
-    github-token:
+    skip_cleanup: true
+    github_token:
       secure: JJ/U5RQd//KrmgeV1AblzXn/gs3/T0/cELzxnjRXLuQlFsI5xMEF1sVEoFLB9nUboSeI3/Cz8uxQ7oyRIF7Yb82B6+IsfBmJOwU3CnflIXsJiSvYqBVnlaMJ8ZY4QttQPA+trXcM5oCEzwmeHy6U5ZxWnrKMzB1iqVmAWg2gDFu8NpneQ3a+9jLBGpQV+/GPRB0nNrwKG6igieo5GNUZwWYqE9lbkmLbb1MZx3vUHBRLvzkqyhOslj+yXkIqxgQmpNBHd9qxNK0idwJNbmMeNYCwsjxyO7GhAkuACRctPg+DODFNtC8MXHOVz8W1avDnfat6zFnlKtQyPSI1v7OfAHy2/uDbTpD5i21aGIjph19fj/DCfLX2dskLMQyYNMJHEWdJHWJyM8xgt7MOAheAD02MZxy1Lc4J8ylU8EQ1s5HcbojsXoIzP8dfjA9iYVQk8ja9+HHQ0DhCAbCbEJkqIbW/AC6Zi/SphE2+9MDTZyq9Fdq4pjpdNja88D9MM/pXsxFZZEKkMpQrhRg1urizv57Z/NVgYwkJNy4BlrbejmWy86sCa/JpNFgo67EaABo6Q5gyJKR6V6bkhkgTTA690cVZ6JhWegegpvYaTbB3ntQlYDryyqtjR954451eSQ/pH42zKRUGlYF/u/nOZwzPvW2cKOYGn4fzyk2V6eJRjfM=
-    keep-history: true
-    local-dir: ./docs
+    keep_history: true
+    local_dir: ./docs
     verbose: true
     on:
       branch: master
