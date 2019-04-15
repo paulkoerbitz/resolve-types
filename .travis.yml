@@ -38,3 +38,4 @@ deploy:
     verbose: true
     on:
       branch: master
+      repo: grissius/intspector
