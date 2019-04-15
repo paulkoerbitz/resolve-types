@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
  - **[breaking]** Renamed `inspect` to `inspectObject`
+ - [Require TS >= 1.7](https://github.com/Microsoft/TypeScript/wiki/API-Breaking-Changes#typescript-17)
 
 ## [0.0.3] - 2019-04-12
 ### Removed

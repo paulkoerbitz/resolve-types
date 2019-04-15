@@ -34,7 +34,7 @@
     "check": "npm-check -i app -i errors -i config -i index & exit 0"
   },
   "dependencies": {
-    "typescript": "*"
+    "typescript": ">=1.7"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
