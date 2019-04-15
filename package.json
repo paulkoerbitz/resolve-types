@@ -1,6 +1,6 @@
 {
   "name": "intspector",
-  "description": "intspector",
+  "description": "Inspect your TS types as strings and integrate type testing into your favorite testing framework!",
   "version": "0.0.3",
   "author": "Jaroslav Šmolík <grissius@gmail.com>",
   "contributors": [
@@ -16,7 +16,13 @@
   },
   "license": "MIT",
   "keywords": [
-
+    "typescript",
+    "types",
+    "resolve",
+    "string",
+    "unit",
+    "inspect",
+    "detect"
   ],
   "scripts": {
     "build": "tsc",
