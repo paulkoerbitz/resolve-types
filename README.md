@@ -6,6 +6,7 @@
 
 
 [![Build Status](https://img.shields.io/travis/com/grissius/intspector/master.svg?style=flat-square)](https://travis-ci.com/grissius/intspector)
+[![Npm](https://img.shields.io/npm/v/intspector.svg?style=flat-square)](https://www.npmjs.com/package/intspector)
 [![Coverage](https://img.shields.io/codeclimate/coverage/grissius/intspector.svg?style=flat-square)](https://codeclimate.com/github/grissius/intspector)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/grissius/intspector.svg?style=flat-square)](https://codeclimate.com/github/grissius/intspector)
 [![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/grissius/intspector.svg?style=flat-square)](https://snyk.io/test/github/grissius/intspector?targetFile=package.json)
