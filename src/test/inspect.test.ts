@@ -1,8 +1,8 @@
-import { inspectObject } from 'index';
+import { inspectObjectCore } from 'lib/inspect';
 
-describe('InspectObject', () => {
+describe('inspectObjectCore', () => {
     test('Basic types', () => {
-        const types = inspectObject('', {
+        const types = inspectObjectCore('', {
             str: 'string',
             anys: 'any[]',
             record: 'Record<number, string>',
@@ -12,27 +12,30 @@ describe('InspectObject', () => {
         expect(types).toMatchSnapshot();
     });
     test('Self-reference', () => {
-        const types = inspectObject('', {
+        const types = inspectObjectCore('', {
             a: 'string',
             b: 'a | Promise<a>',
         });
         expect(types).toMatchSnapshot();
     });
     test('Preamble', () => {
-        const types = inspectObject("let x = 1; let y = '';", {
+        const types = inspectObjectCore("let x = 1; let y = '';", {
             res: 'typeof x & typeof y',
         });
         expect(types).toMatchSnapshot();
     });
     test('Import', () => {
-        const types = inspectObject("import { inspectObject } from 'index';", {
-            res: 'typeof inspectObject',
-        });
+        const types = inspectObjectCore(
+            "import { inspectObject } from 'index';",
+            {
+                res: 'typeof inspectObject',
+            }
+        );
         expect(types).toMatchSnapshot();
     });
     test('Bad import', () => {
         expect(() =>
-            inspectObject("import { foo } from 'blah';", {
+            inspectObjectCore("import { foo } from 'blah';", {
                 res: 'typeof foo',
             })
         ).toThrow();

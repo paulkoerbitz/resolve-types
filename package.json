@@ -42,7 +42,7 @@
     "jest": "^24.5.0",
     "lint-staged": "^8.1.5",
     "npm-check": "^5.8.0",
-    "prettier": "^1.15.3",
+    "prettier": "^1.17.0",
     "prettier-config-ackee": "^0.0.13",
     "ts-jest": "^24.0.0",
     "tslint-config-ackee": "^0.3.0",

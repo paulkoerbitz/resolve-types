@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  - typescript as main dependency
  - Description, tags, readme header
+ - `inspect`, `inspectObject`, `inspectWithPreamble`, `inspectObjectWithPreamble`
 
 ### Changed
  - **[breaking]** Renamed `inspect` to `inspectObject`

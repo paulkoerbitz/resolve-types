@@ -1,11 +1,13 @@
 import * as ts from 'typescript';
 import { createInlineProgram } from './program';
 
-export const inspectObject = <T extends Record<string, string>>(
+export const inspectObjectCore = <T extends Record<string, string>>(
     preamble: string,
     typeMap: T
 ) => {
-    const code = [preamble].concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d};`)).join(' ');
+    const code = [preamble]
+        .concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d};`))
+        .join(' ');
     const { program, inlineSourceFile } = createInlineProgram(code);
     const checker = program.getTypeChecker();
 
@@ -25,10 +27,13 @@ export const inspectObject = <T extends Record<string, string>>(
             return [symbol.name, type];
         });
 
-    const types = pairs.reduce((acc, [k, v]) => {
-        acc[k] = v;
-        return acc;
-    }, {} as { [K in keyof T]: string });
+    const types = pairs.reduce(
+        (acc, [k, v]) => {
+            acc[k] = v;
+            return acc;
+        },
+        {} as { [K in keyof T]: string }
+    );
 
     const diagnostics = [
         ...program.getSyntacticDiagnostics(inlineSourceFile),
@@ -42,3 +47,15 @@ export const inspectObject = <T extends Record<string, string>>(
 
     return types;
 };
+
+export const inspectCore = (preamble: string, type: string) =>
+    inspectObjectCore(preamble, { x: type }).x;
+
+export const inspectObjectWithPreamble = <T extends Record<string, string>>(
+    preamble: string
+) => (typeMap: T) => inspectObjectCore(preamble, typeMap);
+export const inspectWithPreamble = (preamble: string) => (type: string) =>
+    inspectCore(preamble, type);
+
+export const inspectObject = inspectObjectWithPreamble('');
+export const inspect = inspectWithPreamble('');

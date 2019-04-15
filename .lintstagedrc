@@ -1,0 +1,3 @@
+{
+  "*.ts": ["prettier --write", "tslint --fix", "git add", "npm run lint", "npm test -- --ci --findRelatedTests"]
+}

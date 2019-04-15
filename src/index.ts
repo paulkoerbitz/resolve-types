@@ -1,2 +1,7 @@
 export { getOptions, setOptions } from './lib/options';
-export { inspectObject } from './lib/inspect';
+export {
+    inspectObjectWithPreamble,
+    inspectObject,
+    inspectWithPreamble,
+    inspect,
+} from './lib/inspect';
