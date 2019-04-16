@@ -1,7 +1,8 @@
 {
     "includeDeclarations": true,
     "excludeExternals": true,
+    "exclude": "src/lib/program.ts",
     "name": "intspector",
-    "mode": "file",
+    "mode": "modules",
     "out": "docs"
 }

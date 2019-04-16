@@ -1,13 +1,12 @@
 import * as fs from 'fs';
 import * as ts from 'typescript';
 
-/**
- * The global options object which setOptions and getOptions work on
- */
+/** @ignore */
 let options: ts.CompilerOptions;
 
 /**
  * @see https://github.com/Microsoft/TypeScript/issues/5276#issuecomment-148926002
+ * @ignore
  */
 function convertConfigToCompilerOptions(opts: {
     compilerOptions: ts.CompilerOptions;
@@ -33,12 +32,12 @@ function convertConfigToCompilerOptions(opts: {
 }
 
 /**
- * Set compiler options for checking inline code
+ * Set compiler options for inspect functions.
+ * Operates on global object.
  *
- * @param input Compiler options for use when checking inline code.
- * @param ignoreProjectOptions If true, do not merge the passed options with
- *     the project options (from tsconfig.json) but only use the passed options
- *     exclusively. False by default.
+ * @param input Compiler options. Beware, enum option values are different than the ones from your json.
+ * @param ignoreProjectOptions If true, do not merge the passed options with the project options (from tsconfig.json) but only use the passed options exclusively. False by default.
+ * @returns current options
  */
 export const setOptions = (
     input: ts.CompilerOptions,
@@ -67,7 +66,7 @@ export const setOptions = (
 };
 
 /**
- * Get the TypeScript compiler options to be used for resolving types
+ * Get the TypeScript compiler options to be used for inspect functions.
  */
 export const getOptions = (): ts.CompilerOptions => {
     if (options === undefined) {
