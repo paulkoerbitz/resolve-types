@@ -1,13 +1,35 @@
 import * as ts from 'typescript';
 import { createInlineProgram } from './program';
 
-/** @ignore */
-export const inspectObjectCore = <T extends Record<string, string>>(
-    preamble: string,
-    typeMap: T
+/**
+ * Same as `inspect`, but with additional step of adding a code before the type resolution.
+ *
+ * @see [[inspect]]
+ *
+ * @example
+ * ```typescript
+ * const inspectWithFoo = inspectWithPreamble('const foo = 2');
+ * inspectWithFoo('typeof foo'); // "2"
+ * ```
+ * @example
+ * ```typescript
+ * const inspectWithFoo = inspectWithPreamble('const foo = 2');
+ * inspectWithFoo({foo: 'typeof foo'}); // { foo: "2" }
+ * ```
+ * @param preamble TypeScript code to be prepended
+ * @returns `Record<string, string> -> Record<string, string>` an `inspectObject` function with prepended code
+ */
+export const inspectWithPreamble = (preamble: string) => <
+    T extends Record<string, string> | string
+>(
+    input: T
 ) => {
+    const scalar = typeof input === 'string';
+    if (scalar) {
+        input = { x: input } as any;
+    }
     const code = [`${preamble};`]
-        .concat(Object.entries(typeMap).map(([k, d]) => `type ${k} = ${d};`))
+        .concat(Object.entries(input).map(([k, d]) => `type ${k} = ${d};`))
         .join(' ');
     const { program, inlineSourceFile } = createInlineProgram(code);
     const checker = program.getTypeChecker();
@@ -17,7 +39,7 @@ export const inspectObjectCore = <T extends Record<string, string>>(
             inlineSourceFile!.endOfFileToken,
             ts.SymbolFlags.Type
         )
-        .filter(symbol => Object.keys(typeMap).includes(symbol.name))
+        .filter(symbol => Object.keys(input).includes(symbol.name))
         .map(symbol => {
             const symbolType = checker.getDeclaredTypeOfSymbol(symbol);
             const type = checker.typeToString(
@@ -33,7 +55,7 @@ export const inspectObjectCore = <T extends Record<string, string>>(
             acc[k] = v;
             return acc;
         },
-        {} as { [K in keyof T]: string }
+        {} as { [K in keyof T]: string } & { [k: string]: string }
     );
 
     const diagnostics = [
@@ -43,61 +65,11 @@ export const inspectObjectCore = <T extends Record<string, string>>(
     ];
 
     if (diagnostics.length > 0) {
-        console.log(diagnostics);
         throw diagnostics;
     }
 
-    return types;
+    return (scalar ? types.x : types) as T;
 };
-
-/** @ignore */
-export const inspectCore = (preamble: string, type: string) =>
-    inspectObjectCore(preamble, { x: type }).x;
-
-/**
- * Same as `inspectObject`, but with additional step of adding a code before the type resolution.
- *
- * @see [[inspectObject]]
- * @example
- * ```typescript
- * const inspectWithFoo = inspectObjectWithPreamble('const foo = 2');
- * inspectWithFoo({foo: 'typeof foo'}); // { foo: "2" }
- * ```
- * @param preamble TypeScript code to be prepended
- * @returns `Record<string, string> -> Record<string, string>` an `inspectObject` function with prepended code
- */
-export const inspectObjectWithPreamble = <T extends Record<string, string>>(
-    preamble: string
-) => (typeMap: T) => inspectObjectCore(preamble, typeMap);
-
-/**
- * Same as `inspect`, but with additional step of adding a code before the type resolution.
- *
- * @see [[inspect]]
- * @example
- * ```typescript
- * const inspectWithFoo = inspectWithPreamble('const foo = 2');
- * inspectWithFoo('typeof foo'); // "2"
- * ```
- * @param preamble TypeScript code to be prepended
- * @returns `string -> string` an `inspect` function with prepended code
- */
-export const inspectWithPreamble = (preamble: string) => (type: string) =>
-    inspectCore(preamble, type);
-
-/**
- * Same as `inspect`, but accepts an object of types.
- *
- * @see [[inspect]]
- * @example
- * ```typescript
- * inspectObject({a: 'string | number', b: 'boolean'}); // {a: "string | number", b: "boolean"}
- * ```
- * @function `Record<string, string> -> Record<string, string>`
- * @param typeMap Object with values of TypeScript type expression
- * @returns Object of resolved TypeScript types
- */
-export const inspectObject = inspectObjectWithPreamble('');
 
 /**
  * Returns type as a string from TS expression.
@@ -107,20 +79,14 @@ export const inspectObject = inspectObjectWithPreamble('');
  * ```typescript
  * inspect('Record<keyof any, Array<number>>'); // "{ [x: string]: number[]; [x: number]: number[]; };"
  * ```
+ *
+ * @example
+ * ```typescript
+ * inspect({a: 'string | number', b: 'boolean'}); // {a: "string | number", b: "boolean"}
+ * ```
  * @function `string -> string`
+ * @function `Record<string, string> -> Record<string, string>`
  * @param type TypeScript type expression, e.g. `typeof Math.random()`
  * @returns TypeScript type, e.g. `number`
  */
 export const inspect = inspectWithPreamble('');
-
-const myInspect = inspectObjectWithPreamble(`
-const ans = () => 42;
-const ran = 'foo'.toUpperCase();
-type Complex = { r: number; i: number };`);
-const res = myInspect({
-    fooRes: 'ReturnType<typeof ans>',
-    typeOfRan: 'typeof ran',
-    real: "Pick<Complex, 'r'>",
-});
-
-console.log(res);
