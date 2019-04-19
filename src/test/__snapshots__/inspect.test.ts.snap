@@ -12,7 +12,7 @@ Object {
 
 exports[`inspect inspectObjectCore Import 1`] = `
 Object {
-  "res": "(typeMap: Record<string, string>) => { [x: string]: string; }",
+  "res": "<T extends string | Record<string, string>>(input: T) => T",
 }
 `;
 

@@ -1,15 +1,9 @@
-import {
-    inspect,
-    inspectObject,
-    inspectObjectWithPreamble,
-    inspectWithPreamble,
-} from 'index';
-import { inspectObjectCore } from 'lib/inspect';
+import { inspect, inspectWithPreamble } from 'index';
 
 describe('inspect', () => {
     describe('inspectObjectCore', () => {
         test('Basic types', () => {
-            const types = inspectObjectCore('', {
+            const types = inspect({
                 str: 'string',
                 anys: 'any[]',
                 record: 'Record<number, string>',
@@ -19,30 +13,29 @@ describe('inspect', () => {
             expect(types).toMatchSnapshot();
         });
         test('Self-reference', () => {
-            const types = inspectObjectCore('', {
+            const types = inspect({
                 a: 'string',
                 b: 'a | Promise<a>',
             });
             expect(types).toMatchSnapshot();
         });
         test('Preamble', () => {
-            const types = inspectObjectCore("let x = 1; let y = '';", {
+            const types = inspectWithPreamble("let x = 1; let y = '';")({
                 res: 'typeof x & typeof y',
             });
             expect(types).toMatchSnapshot();
         });
         test('Import', () => {
-            const types = inspectObjectCore(
-                "import { inspectObject } from 'index';",
-                {
-                    res: 'typeof inspectObject',
-                }
-            );
+            const types = inspectWithPreamble(
+                "import { inspect } from 'index';"
+            )({
+                res: 'typeof inspect',
+            });
             expect(types).toMatchSnapshot();
         });
         test('Bad import', () => {
             expect(() =>
-                inspectObjectCore("import { foo } from 'blah';", {
+                inspectWithPreamble("import { foo } from 'blah';")({
                     res: 'typeof foo',
                 })
             ).toThrow();
@@ -55,7 +48,7 @@ describe('inspect', () => {
     });
     describe('inspectObject', () => {
         test('runs', () => {
-            expect(inspectObject({ x: 'number' })).toMatchObject({
+            expect(inspect({ x: 'number' })).toMatchObject({
                 x: 'number',
             });
         });
@@ -70,7 +63,7 @@ describe('inspect', () => {
     describe('inspectObjectWithPreamble', () => {
         test('runs', () => {
             expect(
-                inspectObjectWithPreamble('const x = Math.random()')({
+                inspectWithPreamble('const x = Math.random()')({
                     x: 'typeof x',
                 })
             ).toMatchObject({ x: 'number' });
