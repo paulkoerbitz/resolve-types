@@ -50,31 +50,20 @@ See full public API typedoc [documentation](https://grissius.github.io/intspecto
 
 ### Inspect functions
 
-`inspect` inspects a single type
+`inspect` inspects a single type or multiple types if provided an object
 
 ```typescript
 inspect('Record<keyof any, Array<number>>'); // "{ [x: string]: number[]; [x: number]: number[]; };"
+inspect({a: 'string | number', b: 'boolean'}); // {a: "string | number", b: "boolean"}
 ```
 
-`inspectObject` inspects multiple types
-
-```typescript
-inspectObject({a: 'string | number', b: 'boolean'}); // {a: "string | number", b: "boolean"}
-```
-
-`inspectWithPreamble` inspects a single type, but allows extra code to be executed beforehand
-
+`inspectWithPreamble` HOF returning `inspect` with code to be executed beforehand.
+The inspect is still the same function: can take object or string.
 
 ```typescript
 const inspectWithFoo = inspectWithPreamble('const foo = 2');
 inspectWithFoo('typeof foo'); // "2"
-```
-
-`inspectObjectWithPreamble` inspects multiple types, but allows extra code to be executed beforehand
-
-```typescript
-const inspectWithFoo = inspectObjectWithPreamble('const foo = 2');
-inspectWithFoo({foo: 'typeof foo'}); // { foo: "2" }
+inspectWithFoo({ foo: 'typeof foo' }); // { foo: "2" }
 ```
 
 ### Options functions
