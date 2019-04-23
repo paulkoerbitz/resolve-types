@@ -1,7 +1,7 @@
 {
   "name": "intspector",
   "description": "Inspect your TS types as strings and integrate type testing into your favorite testing framework!",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Jaroslav Šmolík <grissius@gmail.com>",
   "contributors": [
     "Jaroslav Šmolík <grissius@gmail.com>"
