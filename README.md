@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/146/sleuth-or-spy_1f575.png" />
+<img src="https://i.imgur.com/TmnNYOY.png" />
 
-<h1>In<img src="https://cdn-images-1.medium.com/max/1600/1*mn6bOs7s6Qbao15PMNRyOA.png" width=30 />pector</h1>
+<h1>In<img src="https://i.imgur.com/ZAMzvXd.png" />pector</h1>
 
 
 [![Build Status](https://img.shields.io/travis/com/grissius/intspector/master.svg?style=flat-square)](https://travis-ci.com/grissius/intspector)
