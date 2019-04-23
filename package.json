@@ -6,7 +6,7 @@
   "contributors": [
     "Jaroslav Šmolík <grissius@gmail.com>"
   ],
-  "main": "./dist/main.js",
+  "main": "./dist/index.js",
   "engines": {
     "node": "^10.14.0"
   },
@@ -33,6 +33,9 @@
     "docs": "typedoc --options typedoc.json src/lib/*.ts",
     "check": "npm-check -i app -i errors -i config -i index & exit 0"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "typescript": ">=1.7"
   },
