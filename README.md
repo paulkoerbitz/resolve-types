@@ -87,7 +87,7 @@ const opts = setOptions({ strict: false, module: ts.ModuleKind.CommonJS });
 ## Advanced usage
 You can self-reference your types
 ```typescript
-const res = inspectObject({
+const res = inspect({
     a: 'string',
     b: 'a | Promise<a>',
 });
@@ -96,7 +96,7 @@ const res = inspectObject({
 
 You can import your types and all imports, or even put any amount of valid code into preamble.
 ```typescript
-const myInspect = inspectObjectWithPreamble(`
+const myInspect = inspectWithPreamble(`
 import { foo } from 'bar'; // foo = 1 + 1
 const ans = () => 42;
 const ran = 'foo'.toUpperCase();
