@@ -18,7 +18,7 @@ function convertConfigToCompilerOptions(opts: {
             // will use ParseConfigHost to collect files in containing folder
             files: [],
         },
-        {} as any,
+        ts.sys,
         ''
     );
     // Remove the following error:
