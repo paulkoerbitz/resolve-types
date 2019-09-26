@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- BC issues with TS 3.6.3 in tests and compilation
+- Added `ts.sys` as `ParseConfigHost` implementation, which is now required in new TS (#1)
 
 ## [1.0.1] - 2019-04-23
 ### Fixed
