@@ -21,7 +21,7 @@ describe('inspect', () => {
         });
         test('Preamble', () => {
             const types = inspectWithPreamble("let x = 1; let y = '';")({
-                res: 'typeof x & typeof y',
+                res: 'typeof x | typeof y',
             });
             expect(types).toMatchSnapshot();
         });
