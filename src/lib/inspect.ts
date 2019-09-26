@@ -55,7 +55,7 @@ export const inspectWithPreamble = (preamble: string) => <
             acc[k] = v;
             return acc;
         },
-        {} as { [K in keyof T]: string } & { [k: string]: string }
+        {} as any
     );
 
     const diagnostics = [
